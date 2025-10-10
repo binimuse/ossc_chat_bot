@@ -5,7 +5,7 @@ import 'package:ossc_chat_bot/app/utils/auth_util.dart';
 import 'package:ossc_chat_bot/gen/assets.gen.dart';
 
 class SplashController extends GetxController {
-  final String appName = 'AscheMart';
+  final String appName = 'Ossc Chat Bot';
   final String appLogo = Assets.logos.logo.path;
 
   @override
@@ -31,7 +31,7 @@ class SplashController extends GetxController {
       if (isAuthenticated) {
         // User is logged in, navigate to main page
         print('Splash: User is authenticated, navigating to main page');
-        Get.offAllNamed(Routes.MAIN_PAGE);
+        Get.offAllNamed(Routes.HOME);
       } else {
         // User is not logged in, navigate to onboarding
         print('Splash: User is not authenticated, navigating to onboarding');

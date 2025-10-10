@@ -972,11 +972,11 @@ class $AssetsImagesGen {
 class $AssetsLogosGen {
   const $AssetsLogosGen();
 
-  /// File path: assets/logos/logo.png
-  AssetGenImage get logo => const AssetGenImage('assets/logos/logo.png');
+  /// File path: assets/logos/logo.svg
+  SvgGenImage get logo => const SvgGenImage('assets/logos/logo.svg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [logo];
+  List<SvgGenImage> get values => [logo];
 }
 
 class $AssetsLottieGen {

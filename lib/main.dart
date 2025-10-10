@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ossc_chat_bot/app/app_language/translations.dart';
 import 'package:ossc_chat_bot/app/utils/lang_util.dart';
 import 'package:ossc_chat_bot/app/utils/prefrence_utility.dart';
+import 'package:ossc_chat_bot/app/theme/app_theme.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:upgrader/upgrader.dart'; // Import the upgrader package
@@ -21,13 +22,13 @@ void main() async {
 
   selectedLocale = LanUtil.getSelecctedLanguage();
 
-  // Set system UI overlay style for the entire app
+  // Set system UI overlay style for dark theme
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Color(0xff37A0F4), // AppColors.primary
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: AppTheme.backgroundColor,
+      systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
 
@@ -52,7 +53,7 @@ void main() async {
             translations: MainTranslations(),
             locale: Locale(selectedLocale),
             navigatorObservers: [BotToastNavigatorObserver()],
-            theme: ThemeData.light(),
+            theme: AppTheme.darkTheme,
             title: 'Ossc Chat Bot'.tr,
             debugShowCheckedModeBanner: false,
             builder: (context, child) {
