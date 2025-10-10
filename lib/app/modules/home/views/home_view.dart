@@ -31,7 +31,7 @@ class HomeView extends GetView<HomeController> {
             ),
             SizedBox(width: 3.w),
             Text(
-              'ChatGPT',
+              'Ossc Chat Bot',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: AppTheme.textPrimary,
                 fontWeight: FontWeight.w600,
@@ -46,20 +46,22 @@ class HomeView extends GetView<HomeController> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Chat Messages Area
-          Expanded(
-            child: Obx(
-              () => controller.messages.isEmpty
-                  ? _buildWelcomeScreen()
-                  : _buildChatMessages(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Chat Messages Area
+            Expanded(
+              child: Obx(
+                () => controller.messages.isEmpty
+                    ? _buildWelcomeScreen()
+                    : _buildChatMessages(),
+              ),
             ),
-          ),
 
-          // Input Area
-          _buildInputArea(),
-        ],
+            // Input Area
+            _buildInputArea(),
+          ],
+        ),
       ),
     );
   }
@@ -67,13 +69,13 @@ class HomeView extends GetView<HomeController> {
   Widget _buildWelcomeScreen() {
     return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.symmetric(horizontal: 32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 20.w,
-              height: 20.w,
+              width: 80,
+              height: 80,
               decoration: BoxDecoration(
                 color: AppTheme.surfaceColor,
                 borderRadius: BorderRadius.circular(20),
@@ -88,10 +90,10 @@ class HomeView extends GetView<HomeController> {
               child: Icon(
                 Icons.chat_bubble_outline,
                 color: AppTheme.primaryColor,
-                size: 10.w,
+                size: 40,
               ),
             ),
-            SizedBox(height: 4.h),
+            SizedBox(height: 16),
             Text(
               'How can I help you today?',
               style: Get.textTheme.headlineMedium?.copyWith(
@@ -99,10 +101,10 @@ class HomeView extends GetView<HomeController> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 3.h),
+            SizedBox(height: 12),
             Wrap(
-              spacing: 2.w,
-              runSpacing: 2.h,
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 _buildSuggestionChip('Explain quantum computing'),
                 _buildSuggestionChip('Write a creative story'),
@@ -120,7 +122,7 @@ class HomeView extends GetView<HomeController> {
     return GestureDetector(
       onTap: () => controller.sendMessage(text),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: AppTheme.surfaceColor,
           borderRadius: BorderRadius.circular(20),
@@ -136,7 +138,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildChatMessages() {
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 2.h),
+      padding: EdgeInsets.symmetric(vertical: 8),
       itemCount: controller.messages.length,
       itemBuilder: (context, index) {
         final message = controller.messages[index];
@@ -151,25 +153,25 @@ class HomeView extends GetView<HomeController> {
     final isLoading = message['isLoading'] as bool? ?? false;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
+      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isUser) ...[
             Container(
-              width: 8.w,
-              height: 8.w,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
                 color: AppTheme.primaryColor,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Icon(Icons.smart_toy, color: Colors.white, size: 4.w),
+              child: Icon(Icons.smart_toy, color: Colors.white, size: 16),
             ),
-            SizedBox(width: 3.w),
+            SizedBox(width: 12),
           ],
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(3.w),
+              padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isUser ? AppTheme.primaryColor : AppTheme.surfaceColor,
                 borderRadius: BorderRadius.circular(12),
@@ -188,7 +190,7 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 2.w),
+                        SizedBox(width: 8),
                         Text(
                           'Typing...',
                           style: TextStyle(
@@ -211,15 +213,15 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           if (isUser) ...[
-            SizedBox(width: 3.w),
+            SizedBox(width: 12),
             Container(
-              width: 8.w,
-              height: 8.w,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
                 color: AppTheme.textSecondary,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Icon(Icons.person, color: Colors.white, size: 4.w),
+              child: Icon(Icons.person, color: Colors.white, size: 16),
             ),
           ],
         ],
@@ -229,14 +231,13 @@ class HomeView extends GetView<HomeController> {
 
   Widget _buildInputArea() {
     return Container(
-      padding: EdgeInsets.all(4.w),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor,
         border: Border(top: BorderSide(color: AppTheme.borderColor, width: 1)),
       ),
-      child: SafeArea(
-        child: Row(
-          children: [
+      child: Row(
+        children: [
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -252,23 +253,24 @@ class HomeView extends GetView<HomeController> {
                     hintStyle: TextStyle(color: AppTheme.textSecondary),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: 4.w,
-                      vertical: 2.h,
+                      horizontal: 16,
+                      vertical: 12,
                     ),
                   ),
                   maxLines: null,
                   textCapitalization: TextCapitalization.sentences,
+                  onChanged: (v) => controller.isMessageEmpty.value = v.trim().isEmpty,
                   onSubmitted: (_) => controller.sendCurrentMessage(),
                 ),
               ),
             ),
-            SizedBox(width: 3.w),
+            SizedBox(width: 12),
             Obx(
               () => Container(
-                width: 12.w,
-                height: 12.w,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
-                  color: controller.messageController.text.isNotEmpty
+                  color: !controller.isMessageEmpty.value
                       ? AppTheme.primaryColor
                       : AppTheme.borderColor,
                   borderRadius: BorderRadius.circular(25),
@@ -276,19 +278,19 @@ class HomeView extends GetView<HomeController> {
                 child: IconButton(
                   icon: Icon(
                     Icons.send,
-                    color: controller.messageController.text.isNotEmpty
+                    color: !controller.isMessageEmpty.value
                         ? Colors.white
                         : AppTheme.textSecondary,
-                    size: 5.w,
+                    size: 20,
                   ),
-                  onPressed: controller.messageController.text.isNotEmpty
+                  onPressed: !controller.isMessageEmpty.value
                       ? controller.sendCurrentMessage
                       : null,
                 ),
               ),
             ),
           ],
-        ),
+        
       ),
     );
   }

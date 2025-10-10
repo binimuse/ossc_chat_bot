@@ -6,6 +6,7 @@ import 'package:ossc_chat_bot/app/routes/app_pages.dart';
 class HomeController extends GetxController {
   final TextEditingController messageController = TextEditingController();
   final RxList<Map<String, dynamic>> messages = <Map<String, dynamic>>[].obs;
+  final RxBool isMessageEmpty = true.obs;
 
   // OpenAI client (you'll need to add your API key)
   late OpenAIClient openAI;
@@ -18,6 +19,7 @@ class HomeController extends GetxController {
 
     // Listen to message controller changes
     messageController.addListener(() {
+      isMessageEmpty.value = messageController.text.trim().isEmpty;
       update();
     });
   }
@@ -125,6 +127,17 @@ class HomeController extends GetxController {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              leading: const Icon(Icons.add_comment, color: Colors.white),
+              title: const Text(
+                'New Chat',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Get.back();
+                messages.clear();
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.history, color: Colors.white),
               title: const Text(
                 'Chat History',
@@ -132,7 +145,7 @@ class HomeController extends GetxController {
               ),
               onTap: () {
                 Get.back();
-                Get.snackbar('Info', 'Chat history feature coming soon!');
+                Get.toNamed(Routes.CHAT_HISTORY);
               },
             ),
             ListTile(
@@ -143,7 +156,7 @@ class HomeController extends GetxController {
               ),
               onTap: () {
                 Get.back();
-                Get.snackbar('Info', 'Settings feature coming soon!');
+                Get.toNamed(Routes.SETTINGS);
               },
             ),
             ListTile(

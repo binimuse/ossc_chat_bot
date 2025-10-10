@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ossc_chat_bot/app/common/app_toasts.dart';
 import 'package:ossc_chat_bot/app/routes/app_pages.dart';
 
 class OtpController extends GetxController {
@@ -58,30 +59,18 @@ class OtpController extends GetxController {
 
       // For demo purposes, accept OTP "123456"
       if (otpCode == '123456') {
-        Get.snackbar(
-          'Success',
-          'Phone verified successfully!',
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        AppToasts.showSuccess('Phone verified successfully!');
+      
 
         // Navigate to login screen
         Get.offAllNamed(Routes.LOGIN);
       } else {
-        Get.snackbar(
-          'Error',
-          'Invalid OTP code. Please try again.',
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        AppToasts.showError('Invalid OTP code. Please try again.');
+       
       }
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Verification failed: ${e.toString()}',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      AppToasts.showError('Verification failed: ${e.toString()}');
+     
     } finally {
       isLoading.value = false;
     }
@@ -96,12 +85,9 @@ class OtpController extends GetxController {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 1));
 
-      Get.snackbar(
-        'OTP Sent',
-        'A new verification code has been sent to ${phoneNumber.value}',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      AppToasts.showSuccess('A new verification code has been sent to ${phoneNumber.value}');
+
+     
 
       // Reset OTP field
       otpController.clear();
@@ -110,12 +96,9 @@ class OtpController extends GetxController {
       // Restart resend timer
       _startResendTimer();
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to resend OTP: ${e.toString()}',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+
+      AppToasts.showError('Failed to resend OTP: ${e.toString()}');
+     
     } finally {
       isLoading.value = false;
     }

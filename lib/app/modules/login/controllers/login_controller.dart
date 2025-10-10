@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ossc_chat_bot/app/common/app_toasts.dart';
 import 'package:ossc_chat_bot/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
@@ -27,22 +28,16 @@ class LoginController extends GetxController {
 
   void login() async {
     if (phoneController.text.isEmpty || passwordController.text.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please fill in all fields',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+
+      AppToasts.showError('Please fill in all fields');
+     
       return;
     }
 
     if (phoneController.text.length < 10) {
-      Get.snackbar(
-        'Error',
-        'Please enter a valid phone number',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+
+      AppToasts.showError('Please enter a valid phone number');
+     
       return;
     }
 
@@ -55,31 +50,21 @@ class LoginController extends GetxController {
       // For demo purposes, accept any email/password
       Get.offAllNamed(Routes.HOME);
 
-      Get.snackbar(
-        'Success',
-        'Login successful!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      AppToasts.showSuccess('Login successful!');
+
+   
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Login failed: ${e.toString()}',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      AppToasts.showError('Login failed: ${e.toString()}');
+    
     } finally {
       isLoading.value = false;
     }
   }
 
   void forgotPassword() {
-    Get.snackbar(
-      'Forgot Password',
-      'Password reset functionality would be implemented here',
-      backgroundColor: Colors.orange,
-      colorText: Colors.white,
-    );
+
+    AppToasts.showWarning('Password reset functionality would be implemented here');
+  
   }
 
   void goToRegister() {

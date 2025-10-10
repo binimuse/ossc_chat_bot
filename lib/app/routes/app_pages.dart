@@ -8,6 +8,10 @@ import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/chat_history/views/chat_history_view.dart';
+import '../modules/chat_history/bindings/chat_history_binding.dart';
+import '../modules/settings/views/settings_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -43,6 +47,16 @@ class AppPages {
       name: _Paths.OTP,
       page: () => const OtpView(),
       binding: OtpBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_HISTORY,
+      page: () => const ChatHistoryView(),
+      binding: ChatHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }
