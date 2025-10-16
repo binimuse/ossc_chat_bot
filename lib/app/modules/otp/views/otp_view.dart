@@ -39,25 +39,33 @@ class OtpView extends GetView<OtpController> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        Icons.sms_outlined,
+                        Icons.telegram,
                         color: Colors.white,
                         size: 10.w,
                       ),
                     ),
                     SizedBox(height: 3.h),
-                    Text(
-                      'Verify Your Phone',
-                      style: Theme.of(context).textTheme.displayMedium
-                          ?.copyWith(
-                            color: AppTheme.textPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
+                    Obx(
+                      () => Text(
+                        controller.isRegistration.value 
+                            ? 'Verify Your Account'
+                            : 'Verify Your Phone',
+                        style: Theme.of(context).textTheme.displayMedium
+                            ?.copyWith(
+                              color: AppTheme.textPrimary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
                     ),
                     SizedBox(height: 1.h),
-                    Text(
-                      'We sent a verification code to',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppTheme.textSecondary,
+                    Obx(
+                      () => Text(
+                        controller.isRegistration.value
+                            ? 'We sent a verification code to your Telegram'
+                            : 'We sent a verification code to your Telegram',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppTheme.textSecondary,
+                        ),
                       ),
                     ),
                     SizedBox(height: 0.5.h),

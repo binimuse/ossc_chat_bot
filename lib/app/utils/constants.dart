@@ -22,9 +22,9 @@ class Constants {
   static const refreshToken = "REFRESH_TOKEN";
   static const userData = "USER_DATA";
 
-  //register
-
+  // Authentication endpoints
   static const signupuUrl = "/users/register";
+  static const loginUrl = "/auth/login";
 
   //products
   static const getParentProducts = "/product-categories/parent";

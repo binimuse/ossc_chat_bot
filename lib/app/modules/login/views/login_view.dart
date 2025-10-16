@@ -47,7 +47,7 @@ class LoginView extends GetView<LoginController> {
                     ),
                     SizedBox(height: 0.5.h),
                     Text(
-                      'Sign in to continue to ChatGPT',
+                      'Sign in with Telegram',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppTheme.textSecondary,
                       ),
@@ -58,96 +58,118 @@ class LoginView extends GetView<LoginController> {
 
               SizedBox(height: 4.h),
 
-              // Login Form
+              // Telegram Login Form
               Column(
                 children: [
-                    // Phone Number Field
-                    TextField(
-                      controller: controller.phoneController,
-                      keyboardType: TextInputType.phone,
-                      style: const TextStyle(color: AppTheme.textPrimary),
-                      decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        hintText: 'Enter your phone number',
-                        prefixIcon: const Icon(
-                          Icons.phone_outlined,
-                          color: AppTheme.textSecondary,
-                        ),
+                  // Telegram Icon and Info
+                  Container(
+                    padding: EdgeInsets.all(4.w),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        width: 1,
                       ),
                     ),
-
-                    SizedBox(height: 2.h),
-
-                    // Password Field
-                    Obx(
-                      () => TextField(
-                        controller: controller.passwordController,
-                        obscureText: controller.isPasswordVisible.value,
-                        style: const TextStyle(color: AppTheme.textPrimary),
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          hintText: 'Enter your password',
-                          prefixIcon: const Icon(
-                            Icons.lock_outline,
-                            color: AppTheme.textSecondary,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(2.w),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryColor,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              controller.isPasswordVisible.value
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: AppTheme.textSecondary,
-                            ),
-                            onPressed: controller.togglePasswordVisibility,
+                          child: Icon(
+                            Icons.telegram,
+                            color: Colors.white,
+                            size: 6.w,
                           ),
                         ),
-                      ),
-                    ),
-
-                    SizedBox(height: 1.5.h),
-
-                    // Forgot Password
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: controller.forgotPassword,
-                        child: Text(
-                          'Forgot password?',
-                          style: TextStyle(color: AppTheme.primaryColor),
+                        SizedBox(width: 3.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Telegram Authentication',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.textPrimary,
+                                ),
+                              ),
+                              SizedBox(height: 0.5.h),
+                              Text(
+                                'We\'ll send you a verification code via Telegram',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppTheme.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 3.h),
+
+                  // Phone Number Field
+                  TextField(
+                    controller: controller.phoneController,
+                    keyboardType: TextInputType.phone,
+                    style: const TextStyle(color: AppTheme.textPrimary),
+                    decoration: InputDecoration(
+                      labelText: 'Telegram Phone Number',
+                      hintText: 'Enter your Telegram phone number',
+                      prefixIcon: const Icon(
+                        Icons.phone_outlined,
+                        color: AppTheme.textSecondary,
+                      ),
+                      helperText: 'Enter the phone number associated with your Telegram account',
+                      helperStyle: TextStyle(
+                        color: AppTheme.textSecondary,
+                        fontSize: 12,
                       ),
                     ),
+                  ),
 
-                    SizedBox(height: 2.h),
+                  SizedBox(height: 3.h),
 
-                    // Login Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 6.h,
-                      child: ElevatedButton(
-                        onPressed: controller.login,
-                        child: Obx(
-                          () => controller.isLoading.value
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : const Text(
-                                  'Sign In',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                  // Login Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 6.h,
+                    child: ElevatedButton.icon(
+                      onPressed: controller.loginWithTelegram,
+                      icon: Icon(
+                        Icons.telegram,
+                        color: Colors.white,
+                      ),
+                      label: Obx(
+                        () => controller.isLoading.value
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
                                   ),
                                 ),
-                        ),
+                              )
+                            : const Text(
+                                'Send OTP via Telegram',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                       ),
                     ),
+                  ),
 
                     SizedBox(height: 2.h),
 

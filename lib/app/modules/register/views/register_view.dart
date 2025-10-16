@@ -55,7 +55,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     SizedBox(height: 0.5.h),
                     Text(
-                      'Sign up to get started with ChatGPT',
+                      'Sign up with Telegram',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppTheme.textSecondary,
                       ),
@@ -66,9 +66,64 @@ class RegisterView extends GetView<RegisterController> {
 
               SizedBox(height: 3.h),
 
-              // Register Form
+              // Telegram Register Form
               Column(
                 children: [
+                  // Telegram Icon and Info
+                  Container(
+                    padding: EdgeInsets.all(4.w),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(2.w),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.telegram,
+                            color: Colors.white,
+                            size: 6.w,
+                          ),
+                        ),
+                        SizedBox(width: 3.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Telegram Registration',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.textPrimary,
+                                ),
+                              ),
+                              SizedBox(height: 0.5.h),
+                              Text(
+                                'We\'ll verify your account via Telegram',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppTheme.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 3.h),
+
                   // Full Name Field
                   TextField(
                     controller: controller.fullNameController,
@@ -83,7 +138,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ),
 
-                  SizedBox(height: 3.h),
+                  SizedBox(height: 2.h),
 
                   // Phone Number Field
                   TextField(
@@ -91,67 +146,16 @@ class RegisterView extends GetView<RegisterController> {
                     keyboardType: TextInputType.phone,
                     style: const TextStyle(color: AppTheme.textPrimary),
                     decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      hintText: 'Enter your phone number',
+                      labelText: 'Telegram Phone Number',
+                      hintText: 'Enter your Telegram phone number',
                       prefixIcon: const Icon(
                         Icons.phone_outlined,
                         color: AppTheme.textSecondary,
                       ),
-                    ),
-                  ),
-
-                  SizedBox(height: 2.h),
-
-                  // Password Field
-                  Obx(
-                    () => TextField(
-                      controller: controller.passwordController,
-                      obscureText: controller.isPasswordVisible.value,
-                      style: const TextStyle(color: AppTheme.textPrimary),
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Create a password',
-                        prefixIcon: const Icon(
-                          Icons.lock_outline,
-                          color: AppTheme.textSecondary,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isPasswordVisible.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppTheme.textSecondary,
-                          ),
-                          onPressed: controller.togglePasswordVisibility,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 3.h),
-
-                  // Confirm Password Field
-                  Obx(
-                    () => TextField(
-                      controller: controller.confirmPasswordController,
-                      obscureText: controller.isConfirmPasswordVisible.value,
-                      style: const TextStyle(color: AppTheme.textPrimary),
-                      decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        hintText: 'Confirm your password',
-                        prefixIcon: const Icon(
-                          Icons.lock_outline,
-                          color: AppTheme.textSecondary,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isConfirmPasswordVisible.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppTheme.textSecondary,
-                          ),
-                          onPressed: controller.toggleConfirmPasswordVisibility,
-                        ),
+                      helperText: 'Enter the phone number associated with your Telegram account',
+                      helperStyle: TextStyle(
+                        color: AppTheme.textSecondary,
+                        fontSize: 12,
                       ),
                     ),
                   ),
@@ -162,9 +166,13 @@ class RegisterView extends GetView<RegisterController> {
                   SizedBox(
                     width: double.infinity,
                     height: 6.h,
-                    child: ElevatedButton(
-                      onPressed: controller.register,
-                      child: Obx(
+                    child: ElevatedButton.icon(
+                      onPressed: controller.registerWithTelegram,
+                      icon: Icon(
+                        Icons.telegram,
+                        color: Colors.white,
+                      ),
+                      label: Obx(
                         () => controller.isLoading.value
                             ? const SizedBox(
                                 width: 20,
@@ -177,7 +185,7 @@ class RegisterView extends GetView<RegisterController> {
                                 ),
                               )
                             : const Text(
-                                'Create Account',
+                                'Create Account with Telegram',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

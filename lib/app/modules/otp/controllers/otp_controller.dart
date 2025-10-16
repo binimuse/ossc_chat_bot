@@ -11,14 +11,30 @@ class OtpController extends GetxController {
   final RxBool canResend = false.obs;
   final RxInt resendTimer = 60.obs;
   final RxString phoneNumber = ''.obs;
+  final RxString fullName = ''.obs;
+  final RxBool isRegistration = false.obs;
 
   Timer? _resendTimer;
 
   @override
   void onInit() {
     super.onInit();
-    // Get phone number from previous screen (you can pass it as argument)
-    phoneNumber.value = Get.arguments ?? '+1234567890';
+    
+    // Get arguments from previous screen
+    final args = Get.arguments;
+    if (args is Map) {
+      phoneNumber.value = args['phone_number'] ?? '';
+      fullName.value = args['full_name'] ?? '';
+      isRegistration.value = args['is_registration'] ?? false;
+    } else if (args is String) {
+      // Backward compatibility for login flow
+      phoneNumber.value = args;
+      isRegistration.value = false;
+    } else {
+      phoneNumber.value = '+1234567890';
+      isRegistration.value = false;
+    }
+    
     _startResendTimer();
   }
 
@@ -52,28 +68,34 @@ class OtpController extends GetxController {
     isLoading.value = true;
 
     try {
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
+      // Demo implementation - verify any 6-digit OTP
+      await _verifyTelegramOtp(otpController.text);
 
-      final otpCode = otpController.text;
-
-      // For demo purposes, accept OTP "123456"
-      if (otpCode == '123456') {
-        AppToasts.showSuccess('Phone verified successfully!');
-      
-
-        // Navigate to login screen
-        Get.offAllNamed(Routes.LOGIN);
+      if (isRegistration.value) {
+        AppToasts.showSuccess('Account created successfully!');
       } else {
-        AppToasts.showError('Invalid OTP code. Please try again.');
-       
+        AppToasts.showSuccess('Login successful!');
       }
+      
+      // Navigate to home screen
+      Get.offAllNamed(Routes.HOME);
     } catch (e) {
       AppToasts.showError('Verification failed: ${e.toString()}');
-     
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> _verifyTelegramOtp(String otpCode) async {
+    // Demo implementation - simulate OTP verification
+    await Future.delayed(const Duration(seconds: 2));
+    
+    // For demo purposes, accept any 6-digit OTP
+    if (otpCode.length != 6) {
+      throw Exception('OTP must be 6 digits');
+    }
+    
+    print('Demo: OTP $otpCode verified for ${phoneNumber.value}');
   }
 
   void resendOtp() async {
@@ -82,27 +104,20 @@ class OtpController extends GetxController {
     isLoading.value = true;
 
     try {
-      // Simulate API call
+      // Demo implementation - simulate resending OTP
       await Future.delayed(const Duration(seconds: 1));
-
-      AppToasts.showSuccess('A new verification code has been sent to ${phoneNumber.value}');
-
-     
-
-      // Reset OTP field
-      otpController.clear();
-      isOtpComplete.value = false;
-
-      // Restart resend timer
+      
+      AppToasts.showSuccess('OTP resent successfully!');
       _startResendTimer();
+      
+      print('Demo: OTP resent to ${phoneNumber.value}');
     } catch (e) {
-
       AppToasts.showError('Failed to resend OTP: ${e.toString()}');
-     
     } finally {
       isLoading.value = false;
     }
   }
+
 
   void changePhoneNumber() {
     Get.back();
