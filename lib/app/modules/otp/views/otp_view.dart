@@ -122,7 +122,7 @@ class OtpView extends GetView<OtpController> {
               // Verify Button
               SizedBox(
                 width: double.infinity,
-                height: 6.h,
+                height: 7.h,
                 child: Obx(
                   () => ElevatedButton(
                     onPressed: controller.isOtpComplete.value

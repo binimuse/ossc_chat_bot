@@ -141,7 +141,7 @@ class LoginView extends GetView<LoginController> {
                   // Login Button
                   SizedBox(
                     width: double.infinity,
-                    height: 6.h,
+                    height: 7.h,
                     child: ElevatedButton.icon(
                       onPressed: controller.loginWithTelegram,
                       icon: Icon(
@@ -163,8 +163,8 @@ class LoginView extends GetView<LoginController> {
                             : const Text(
                                 'Send OTP via Telegram',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                       ),

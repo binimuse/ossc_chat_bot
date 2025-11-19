@@ -74,9 +74,7 @@ class ProductCard extends StatelessWidget {
                       product['image'] ??
                           'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
                       key: ValueKey<String>(
-                        (product['id']?.toString() ?? '') +
-                            '|' +
-                            (product['image']?.toString() ?? ''),
+                        '${product['id']?.toString() ?? ''}|${product['image']?.toString() ?? ''}',
                       ),
                       fit: BoxFit.contain,
                       loadingBuilder: (context, child, loadingProgress) {
